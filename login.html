@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Attendance login</title>
+    <style>
+      :root {
+        --card: #ffffff;
+        --primary: #2f6fed;
+        --border: #dfe7f5;
+        --text: #1d2433;
+        --muted: #68768c;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        display: grid;
+        min-height: 100vh;
+        margin: 0;
+        place-items: center;
+        background: linear-gradient(135deg, #f5f9ff 0%, #edf3ff 100%);
+        color: var(--text);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      main {
+        width: min(560px, 90vw);
+      }
+
+      nav {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 12px;
+        padding: 4px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--card);
+      }
+
+      nav a {
+        flex: 1;
+        padding: 10px 12px;
+        border-radius: 7px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        font-weight: 700;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      nav a[aria-current="page"] {
+        background: var(--primary);
+        color: white;
+      }
+
+      form {
+        padding: 28px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--card);
+      }
+
+      h1 {
+        margin: 0 0 22px;
+        color: var(--primary);
+        font-size: 1.5rem;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 700;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 1rem;
+      }
+
+      input:focus {
+        outline: 2px solid var(--primary);
+        outline-offset: 1px;
+      }
+
+      button {
+        margin-top: 18px;
+        padding: 11px 18px;
+        border: 0;
+        border-radius: 8px;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .error {
+        color: #a32121;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <nav aria-label="Attendance pages">
+        <a href="/">New attendance</a>
+        <a href="/login" aria-current="page">Login</a>
+      </nav>
+      <form action="/login" method="post">
+        <h1>Attendance login</h1>
+        {% if error %}
+        <p class="error" role="alert">Incorrect password. Please try again.</p>
+        {% endif %}
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          autocomplete="current-password"
+          required
+        />
+        <button type="submit">Login</button>
+      </form>
+    </main>
+  </body>
+</html>

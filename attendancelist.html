@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>mangeli.co.ke</title>
+        <style>
+      :root {
+        --bg: #eef4ff;
+        --card: #ffffff;
+        --primary: #2f6fed;
+        --primary-soft: #edf3ff;
+        --border: #dfe7f5;
+        --text: #1d2433;
+        --muted: #68768c;
+        --shadow: rgba(47, 111, 237, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #f5f9ff 0%, #edf3ff 100%);
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--text);
+      }
+
+      .page-shell {
+        width: min(900px, 90vw);
+      }
+
+      .tabs {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 12px;
+        padding: 4px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--card);
+      }
+
+      .tabs a {
+        flex: 1;
+        padding: 10px 12px;
+        border-radius: 7px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        font-weight: 700;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      .tabs a[aria-current="page"] {
+        background: var(--primary);
+        color: white;
+      }
+
+      .tabs .logout-link {
+        flex: 0 0 auto;
+      }
+
+      form {
+        width: 100%;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 30px 28px 22px;
+        box-shadow: 0 14px 30px var(--shadow);
+        position: relative;
+      }
+
+      h1 {
+        margin: 0 0 18px;
+        color: var(--primary);
+        font-size: 1.5rem;
+      }
+
+      .records-panel {
+        padding: 24px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--card);
+        box-shadow: 0 14px 30px var(--shadow);
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+      }
+
+      th,
+      td {
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      th {
+        background: #f9fbff;
+      }
+
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .delete-form {
+        width: auto;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .delete-form::before {
+        display: none;
+        content: none;
+      }
+
+      .delete-button {
+        padding: 7px 10px;
+        border: 1px solid #c93434;
+        border-radius: 6px;
+        background: white;
+        color: #a32121;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      form::before {
+        content: "Class Attendance Register";
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        letter-spacing: 0.03em;
+        margin-bottom: 22px;
+        text-align: center;
+      }
+
+      p {
+        margin: 0 0 18px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: #f9fbff;
+        font-size: 1rem;
+        color: var(--text);
+        transition: all 0.2s ease;
+      }
+
+      input[type="text"]:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(47, 111, 237, 0.12);
+        background: #ffffff;
+      }
+    </style>
+
+    </head>
+    <body>
+      <main class="page-shell">
+        <nav class="tabs" aria-label="Attendance pages">
+          <a href="/">New attendance</a>
+          <a href="/records" aria-current="page">View attendance</a>
+          <a class="logout-link" href="/logout">Log out</a>
+        </nav>
+        <section class="records-panel">
+          <h1>Attendance records</h1>
+          {% if records %}
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Registration number</th>
+                  <th>Submitted at (UTC)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for record in records %}
+                <tr>
+                  <td>{{ record["name"] }}</td>
+                  <td>{{ record["registration_number"] }}</td>
+                  <td>{{ record["submitted_at"] }}</td>
+                  <td>
+                    <form
+                      class="delete-form"
+                      action="{{ url_for('delete_attendance', record_id=record['id']) }}"
+                      method="post"
+                      onsubmit="return confirm('Delete this attendance record?')"
+                    >
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+                      <button class="delete-button" type="submit">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <p>No attendance submissions yet.</p>
+          {% endif %}
+        </section>
+      </main>
+    </body>
+</html>

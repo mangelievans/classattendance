@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>mangeli.co.ke</title>
+    <style>
+      :root {
+        --bg: #eef4ff;
+        --card: #ffffff;
+        --primary: #2f6fed;
+        --primary-soft: #edf3ff;
+        --border: #dfe7f5;
+        --text: #1d2433;
+        --muted: #68768c;
+        --shadow: rgba(47, 111, 237, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #f5f9ff 0%, #edf3ff 100%);
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--text);
+      }
+
+      .page-shell {
+        width: min(560px, 90vw);
+      }
+
+      .tabs {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 12px;
+        padding: 4px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--card);
+      }
+
+      .tabs a {
+        flex: 1;
+        padding: 10px 12px;
+        border-radius: 7px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        font-weight: 700;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      .tabs a[aria-current="page"] {
+        background: var(--primary);
+        color: white;
+      }
+
+      form {
+        width: 100%;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 30px 28px 22px;
+        box-shadow: 0 14px 30px var(--shadow);
+        position: relative;
+      }
+
+      form::before {
+        content: "Class Attendance Register";
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        letter-spacing: 0.03em;
+        margin-bottom: 22px;
+        text-align: center;
+      }
+
+      p {
+        margin: 0 0 18px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: #f9fbff;
+        font-size: 1rem;
+        color: var(--text);
+        transition: all 0.2s ease;
+      }
+
+      input[type="text"]:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(47, 111, 237, 0.12);
+        background: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page-shell">
+      <nav class="tabs" aria-label="Attendance pages">
+        <a href="/" aria-current="page">New attendance</a>
+        <a href="/login">Login to view attendance</a>
+      </nav>
+      <form action="/submit" method="post">
+        <p>
+          <label for="name">Enter Name:</label>
+          <input type="text" id="name" name="name" autocomplete="on" required />
+        </p>
+        <p>
+          <label for="RegNo">Enter Registration Number:</label>
+          <input type="text" id="RegNo" name="RegNo" autocomplete="on" required />
+        </p>
+        <button type="submit">Submit</button>
+      </form>
+    </main>
+    <hr>
+    <footer>
+      <p style="text-align: center; font-size: 0.9rem; color: var(--muted);">
+        &copy; 2026 <a href="https://mangeli.co.ke" style="color: var(--primary); text-decoration: none;">Mangeli Evans</a>. All rights reserved.
+      </p>
+    </footer>
+  </body>
+</html>
