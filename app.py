@@ -82,7 +82,7 @@ def submit_attendance():
 						"INSERT INTO attendance (name, registration_number) VALUES (?, ?)",
 						(name, registration_number),
 				)
-
+        flash("Submitted successfully")
 		return redirect(url_for("attendance_form"))
 
 
