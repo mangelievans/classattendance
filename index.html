@@ -109,6 +109,15 @@
         box-shadow: 0 0 0 4px rgba(47, 111, 237, 0.12);
         background: #ffffff;
       }
+      .success {
+        color: green;
+      }
+      .error {
+        color: red;
+      }
+      .warning {
+        color: orange;
+      }
     </style>
   </head>
   <body>
@@ -117,6 +126,13 @@
         <a href="/" aria-current="page">New attendance</a>
         <a href="/login">Login to view attendance</a>
       </nav>
+      {% with message = get_flashed_messages(with_categories=true) %}
+          {% for category, message in messages %}
+             <div class="{{ success }}">
+               {{message}}
+             </div>
+           {% endfor %}
+      {% endwith %}
       <form action="/submit" method="post">
         <p>
           <label for="name">Enter your Name:</label>
